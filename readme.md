@@ -1,4 +1,4 @@
-# pln CLI
+# PLIN CLI
 
 A CLI for pln.
 
