@@ -1,0 +1,10 @@
+import { I<%= props.name %>UseCase } from './I<%= props.name %>UseCase'
+import { <%= props.name %>RequestDTO } from '../../../dtos/request/<%= props.name %>RequestDTO'
+
+export class <%= props.name %>Controller implements IController<<%= props.name %>RequestDTO> {
+    constructor(private <%= props.name%>UseCase: I<%= props.name %>UseCase) {}
+
+    async handle(request: <%= props.name %>RequestDTO): Promise<HTTPRequest> {
+      return ok({});
+    }
+}
