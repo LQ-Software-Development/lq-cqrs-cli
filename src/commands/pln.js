@@ -6,7 +6,10 @@ const command = {
     print.warning('Bem vindo a Plin CLI')
     print.info('\nComandos disponiveis')
     print.success(
-      'generate:resource - Cria uma estrutura de recurso completa'
+      'generate:command - Cria uma estrutura de useCase do tipo command completa'
+    )
+    print.success(
+      'generate:query - Cria uma estrutura de useCase do tipo query completa'
     )
   },
 }
