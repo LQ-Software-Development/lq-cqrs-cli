@@ -1,6 +1,6 @@
 # PLIN CLI
 
-A CLI for pln.
+CLI para auxiliar o desenvolvimento utilizando DDD.
 
 ## Customizing your CLI
 
