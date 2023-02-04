@@ -8,3 +8,5 @@ build
 .vscode
 testes
 .idea
+.yarn
+.yarnrc.yml

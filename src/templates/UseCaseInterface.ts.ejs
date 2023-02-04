@@ -1,5 +1,4 @@
-export type request = {}
-export type resultDTO = {}
+export type <%= props.name %>UseCaseParams = {}
 
-export type result = Result<resultDTO>
-export type I<%= props.name %>UseCase = IUseCase<request, result>;
+export type result = Result<<%= props.name %>ResponseDTO>;
+export type I<%= props.name %>UseCase = IUseCase<<%= props.name %>UseCaseParams, result>;

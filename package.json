@@ -3,9 +3,7 @@
   "version": "0.0.1",
   "description": "pln CLI",
   "private": true,
-  "bin": {
-    "pln": "bin/pln"
-  },
+  "bin": "bin/pln",
   "scripts": {
     "format": "eslint \"**/*.{js,jsx}\" --fix && prettier \"**/*.{js,jsx,json}\" --write",
     "test": "jest",

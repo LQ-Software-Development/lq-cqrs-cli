@@ -5,6 +5,24 @@ export class <%= props.name %>Controller implements IController<<%= props.name %
     constructor(private <%= props.name%>UseCase: I<%= props.name %>UseCase) {}
 
     async handle(request: <%= props.name %>RequestDTO): Promise<HttpResponse> {
-      return ok({});
+      const result = await this.<%= props.name%>UseCase.execute(request);
+
+      if (result.isFailure)
+        return handleError(result.error);
+
+      return ok(result.value);
+    }
+
+    private handleError(error: Error): HttpResponse {
+      switch (error.name) {
+        case 'NotFound':
+          return notFound(error);
+        default:
+          return fail(error);
+      }
+    }
+
+    private parseRequest(request: <%= props.name %>Request): <%= props.name %>RequestDTO {
+      return request;
     }
 }
