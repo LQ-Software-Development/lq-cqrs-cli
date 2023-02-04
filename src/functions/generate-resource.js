@@ -96,6 +96,7 @@ async function generateResource(toolbox) {
     target: `./useCases/${useCaseType}/${resourceName}/${resourceName}UseCase.spec.ts`,
     props: {
       describe: 'Use case - ' + resourceName,
+      sut: resourceName + 'UseCase',
     },
   })
 
@@ -104,6 +105,7 @@ async function generateResource(toolbox) {
     target: `./useCases/${useCaseType}/${resourceName}/${resourceName}Controller.spec.ts`,
     props: {
       describe: 'Controller - ' + resourceName,
+      sut: resourceName + 'Controller',
     },
   })
 

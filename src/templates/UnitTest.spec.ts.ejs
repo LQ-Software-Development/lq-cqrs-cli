@@ -1,7 +1,9 @@
+import { <%= props.sut %> } from './<%= props.sut %>';
+
 describe('<%= props.describe %>', () => {
-  let sut: any;
+  let sut: <%= props.sut %>;
 
   beforeAll(() => {
-    sut = {};
+    sut = new <%= props.sut %>();
   })
 })
