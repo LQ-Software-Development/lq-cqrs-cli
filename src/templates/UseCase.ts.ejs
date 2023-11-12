@@ -1,9 +1,11 @@
-import { I<%= props.name %>UseCase, request, result } from './I<%= props.name %>UseCase';
+import { Result } from '@/core/application/result.base';
+
+import { I<%= props.name %>UseCase, <%= props.name %>UseCaseParams, result } from './<%= props.kebabedName %>.usecase.interface';
 
 export class <%= props.name %>UseCase implements I<%= props.name %>UseCase {
   constructor() {}
 
-  async execute(data: request): Promise<result> {
+  async execute(data: <%= props.name %>UseCaseParams): Promise<result> {
     return Result.ok({});
   }
 }

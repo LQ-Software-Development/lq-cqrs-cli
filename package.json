@@ -1,9 +1,9 @@
 {
-  "name": "pln",
+  "name": "lq",
   "version": "0.0.1",
-  "description": "pln CLI",
+  "description": "LQ CLI",
   "private": true,
-  "bin": "bin/pln",
+  "bin": "bin/lq",
   "scripts": {
     "format": "eslint \"**/*.{js,jsx}\" --fix && prettier \"**/*.{js,jsx,json}\" --write",
     "test": "jest",

@@ -1,1 +1,10 @@
-export interface <%= props.name %><%= props.type %>DTO {}
+import { ApiProperty } from '@nestjs/swagger';
+import { 
+    IsNotEmpty, 
+    IsString,
+    IsNumber,
+    IsBoolean,
+    IsDate,
+} from 'class-validator';	
+
+export class <%= props.name %><%= props.type %>Dto {}

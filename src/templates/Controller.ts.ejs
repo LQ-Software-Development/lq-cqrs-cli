@@ -1,28 +1,33 @@
-import { I<%= props.name %>UseCase } from './I<%= props.name %>UseCase'
-import { <%= props.name %>RequestDTO } from '../../../dtos/request/<%= props.name %>RequestDTO'
+import {
+  ApiTags,
+  ApiOkResponse,
+  ApiBadRequestResponse,
+  ApiOperation,
+} from '@nestjs/swagger';
+import { Controller, <%= props.method %> } from '@nestjs/common';
 
-export class <%= props.name %>Controller implements IController<<%= props.name %>RequestDTO> {
-    constructor(private <%= props.name%>UseCase: I<%= props.name %>UseCase) {}
+import { ControllerBase } from '@/core/application/controller.base';
 
-    async handle(request: <%= props.name %>RequestDTO): Promise<HttpResponse> {
-      const result = await this.<%= props.name%>UseCase.execute(request);
+import { I<%= props.name %>UseCase } from './<%= props.kebabedName.toLowerCase() %>.usecase.interface';
+import { <%= props.name %>RequestDto } from './dtos/<%= props.kebabedName.toLowerCase() %>.request';
+import { <%= props.name %>ResponseDto } from './dtos/<%= props.kebabedName.toLowerCase() %>.response';
 
-      if (result.isFailure)
-        return handleError(result.error);
+@ApiTags('<%= props.moduleName.toLowerCase() %>')
+@Controller('<%= props.name.toLowerCase() %>')
+export class <%= props.name %>Controller extends ControllerBase {
+  constructor(private <%= props.name%>UseCase: I<%= props.name %>UseCase) {
+    super();
+  }
 
-      return ok(result.value);
-    }
+  @ApiOperation({ summary: '<%= props.name %>' })
+  @ApiOkResponse({ type: <%= props.name %>ResponseDto })
+  @ApiBadRequestResponse({ description: 'Bad Request' })
+  @<%= props.method %>()
+  async handle(request: <%= props.name %>RequestDto) {
+    const result = await this.<%= props.name%>UseCase.execute(request);
 
-    private handleError(error: Error): HttpResponse {
-      switch (error.name) {
-        case 'NotFound':
-          return notFound(error);
-        default:
-          return fail(error);
-      }
-    }
+    if (result.isFailure) return this.prepareErrorResponse(result.error);
 
-    private parseRequest(request: <%= props.name %>Request): <%= props.name %>RequestDTO {
-      return request;
-    }
+    return result.value;
+  }
 }

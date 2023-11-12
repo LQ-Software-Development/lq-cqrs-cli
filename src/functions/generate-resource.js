@@ -1,16 +1,88 @@
-async function generateResource(toolbox) {
+const { toKebabCase } = require('../utils/toKebabCase')
+const { toUpperCamelCase } = require('../utils/toUpperCamelCase')
+
+async function generateResource(toolbox, moduleName, resourceName) {
   const {
-    print: { warning, success, error },
+    print: { success },
     template,
-    prompt,
   } = toolbox
 
-  const { resourceName } = await prompt.ask({
-    type: 'input',
-    name: 'resourceName',
-    message: 'Nome do recurso: ',
-  })
+  const resourceTitle = toUpperCamelCase(resourceName)
 
+  selectUseCaseType(toolbox).then(async ({ useCaseType, restMethod }) => {
+    await template.generate({
+      template: 'UseCaseInterface.ts.ejs',
+      target: `./src/${moduleName}/usecases/${useCaseType}/${resourceName}/${resourceName}.usecase.interface.ts`,
+      props: {
+        name: resourceTitle,
+        kebabedName: toKebabCase(resourceName),
+      },
+    })
+
+    await template.generate({
+      template: 'Controller.ts.ejs',
+      target: `./src/${moduleName}/usecases/${useCaseType}/${resourceName}/${resourceName}.controller.ts`,
+      props: {
+        name: resourceTitle,
+        kebabedName: toKebabCase(resourceName),
+        method: restMethod,
+        moduleName,
+      },
+    })
+
+    await template.generate({
+      template: 'UseCase.ts.ejs',
+      target: `./src/${moduleName}/usecases/${useCaseType}/${resourceName}/${resourceName}.usecase.ts`,
+      props: {
+        name: resourceTitle,
+        kebabedName: toKebabCase(resourceName),
+      },
+    })
+
+    await template.generate({
+      template: 'DTO.ts.ejs',
+      target: `./src/${moduleName}/usecases/${useCaseType}/${resourceName}/dtos/${resourceName}.request.ts`,
+      props: {
+        name: resourceTitle,
+        type: 'Request',
+      },
+    })
+
+    await template.generate({
+      template: 'DTO.ts.ejs',
+      target: `./src/${moduleName}/usecases/${useCaseType}/${resourceName}/dtos/${resourceName}.response.ts`,
+      props: {
+        name: resourceTitle,
+        type: 'Response',
+      },
+    })
+
+    await template.generate({
+      template: 'UnitTest.spec.ts.ejs',
+      target: `./src/${moduleName}/usecases/${useCaseType}/${resourceName}/${resourceName}.usecase.spec.ts`,
+      props: {
+        describe: 'Use case - ' + resourceName,
+        sut: resourceTitle + 'UseCase',
+        kebabedName: toKebabCase(resourceName) + '.usecase',
+      },
+    })
+
+    await template.generate({
+      template: 'UnitTest.spec.ts.ejs',
+      target: `./src/${moduleName}/usecases/${useCaseType}/${resourceName}/${resourceName}.controller.spec.ts`,
+      props: {
+        describe: 'Controller - ' + resourceName,
+        sut: resourceTitle + 'Controller',
+        kebabedName: toKebabCase(resourceName) + '.controller',
+      },
+    })
+
+    success(`Recurso "${resourceName}" criado com sucesso`)
+  })
+}
+
+async function selectUseCaseType(toolbox) {
+  const { prompt } = toolbox
   const { useCaseType } = await prompt.ask({
     type: 'select',
     name: 'useCaseType',
@@ -27,89 +99,35 @@ async function generateResource(toolbox) {
     ],
   })
 
-  const { createFlowTest } = await prompt.ask({
+  const { restMethod } = await prompt.ask({
     type: 'select',
-    name: 'createFlowTest',
-    message: 'Criar teste de fluxo?',
+    name: 'restMethod',
+    message: 'Qual o método HTTP?',
     choices: [
       {
-        value: true,
-        message: 'Sim',
+        value: 'Post',
+        message: 'POST - Criar informações',
       },
       {
-        value: false,
-        message: 'Não',
+        value: 'Put',
+        message: 'PUT - Atualizar informações',
+      },
+      {
+        value: 'Patch',
+        message: 'PATCH - Atualizar informações parcialmente',
+      },
+      {
+        value: 'Delete',
+        message: 'DELETE - Deletar informações',
+      },
+      {
+        value: 'Get',
+        message: 'GET - Buscar informações',
       },
     ],
   })
 
-  if (!resourceName)
-    return Promise.all([
-      error('Nome do recurso deve ser enviado'),
-      warning('\nex.: pln generate:resource "nome_do_recurso"'),
-    ])
-
-  await template.generate({
-    template: 'UseCaseInterface.ts.ejs',
-    target: `./useCases/${useCaseType}/${resourceName}/I${resourceName}UseCase.ts`,
-    props: {
-      name: resourceName,
-    },
-  })
-
-  await template.generate({
-    template: 'Controller.ts.ejs',
-    target: `./useCases/${useCaseType}/${resourceName}/${resourceName}Controller.ts`,
-    props: {
-      name: resourceName,
-    },
-  })
-
-  await template.generate({
-    template: 'UseCase.ts.ejs',
-    target: `./useCases/${useCaseType}/${resourceName}/${resourceName}UseCase.ts`,
-    props: {
-      name: resourceName,
-    },
-  })
-
-  await template.generate({
-    template: 'DTO.ts.ejs',
-    target: `./dtos/request/${resourceName}RequestDTO.ts`,
-    props: {
-      name: resourceName,
-      type: 'Request',
-    },
-  })
-
-  await template.generate({
-    template: 'DTO.ts.ejs',
-    target: `./dtos/response/${resourceName}ResponseDTO.ts`,
-    props: {
-      name: resourceName,
-      type: 'Response',
-    },
-  })
-
-  await template.generate({
-    template: 'UnitTest.spec.ts.ejs',
-    target: `./useCases/${useCaseType}/${resourceName}/${resourceName}UseCase.spec.ts`,
-    props: {
-      describe: 'Use case - ' + resourceName,
-      sut: resourceName + 'UseCase',
-    },
-  })
-
-  await template.generate({
-    template: 'UnitTest.spec.ts.ejs',
-    target: `./useCases/${useCaseType}/${resourceName}/${resourceName}Controller.spec.ts`,
-    props: {
-      describe: 'Controller - ' + resourceName,
-      sut: resourceName + 'Controller',
-    },
-  })
-
-  success(`Recurso "${resourceName}" criado com sucesso`)
+  return { useCaseType, restMethod }
 }
 
 module.exports = generateResource

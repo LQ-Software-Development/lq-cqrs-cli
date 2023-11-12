@@ -1,4 +1,9 @@
+import { IUseCase } from '@/core/application/usecase.interface';
+import { Result } from '@/core/application/result.base';
+
+import { <%= props.name %>ResponseDto } from './dtos/<%= props.kebabedName %>.response';
+
 export type <%= props.name %>UseCaseParams = {}
 
-export type result = Result<<%= props.name %>ResponseDTO>;
+export type result = Result<<%= props.name %>ResponseDto>;
 export type I<%= props.name %>UseCase = IUseCase<<%= props.name %>UseCaseParams, result>;
