@@ -12,6 +12,17 @@ const command = {
       parameters,
     } = toolbox
 
+    const configPaths = ['core']
+
+    let { first: resourceName } = parameters
+
+    if (!resourceName) {
+      if (!resourceName) {
+        error('Nome do recurso deve ser enviado')
+        return warning('\nex.: lq generate "nome_do_recurso"')
+      }
+    }
+
     const { resourceType } = await prompt.ask({
       type: 'select',
       name: 'resourceType',
@@ -21,6 +32,15 @@ const command = {
           value: 'resource',
           message: 'Recurso completo - UseCase, controller, dtos etc.',
         },
+        {
+          value: 'domain',
+          message:
+            'Classe de Domínio - Entidade ou Agregado utilizado para regras de negócio',
+        },
+        /* {
+          value: 'value-object',
+          message: 'Objeto de Valor - Utilizado em Entidades ou Agregados',
+        }, */
       ],
     })
 
@@ -52,17 +72,8 @@ const command = {
       type: 'select',
       name: 'moduleName',
       message: 'Escolha o modulo',
-      choices: directories,
+      choices: directories.filter((dir) => !configPaths.includes(dir)),
     })
-
-    let { first: resourceName } = parameters
-
-    if (!resourceName) {
-      if (!resourceName) {
-        error('Nome do recurso deve ser enviado')
-        return warning('\nex.: lq generate "nome_do_recurso"')
-      }
-    }
 
     switch (resourceType) {
       case 'resource':
@@ -71,6 +82,20 @@ const command = {
           moduleName,
           resourceName
         )
+      case 'domain':
+        return require('../functions/generate-domain')(
+          toolbox,
+          moduleName,
+          resourceName
+        )
+      case 'value-object':
+        return require('../functions/generate-value-object')(
+          toolbox,
+          moduleName,
+          resourceName
+        )
+      default:
+        return error('Tipo de recurso inválido')
     }
   },
 }

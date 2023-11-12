@@ -1,0 +1,27 @@
+import { Result } from '@/core/application/result';
+import { <%= props.entityName %> } from '../../domain/<%= props.kebabedName %>.domain';
+import { <%= props.entityName %>RepositoryInterface } from '../<%= props.kebabedName %>.repository.interface';
+
+export class <%= props.entityName %>RepositoryInMemory implements <%= props.entityName %>RepositoryInterface {
+  private readonly _repository: Map<string, <%= props.entityName %>> = new Map();
+
+  async save(entity: <%= props.entityName %>): Promise<Result<<%= props.entityName %>>> {
+    this._repository.set(entity.id, entity);
+
+    return Result.ok(entity);
+  }
+
+  async findById(id: string): Promise<<%= props.entityName %> | null> {
+    const entity = this._repository.get(id);
+
+    if (!entity) {
+      return null;
+    }
+
+    return entity;
+  }
+
+  async list(): Promise<<%= props.entityName %>[]> {
+    return Array.from(this._repository.values());
+  }
+}

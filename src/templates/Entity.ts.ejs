@@ -1,0 +1,19 @@
+import { Entity, AggregateID } from '@/core/domain/entity.base';
+import { randomUUID } from 'crypto';
+
+export class <%= props.entityName %> extends Entity<<%= props.entityName %>Props> {
+  protected _id: AggregateID;
+
+  static create(props: <%= props.entityName %>Props): <%= props.entityName %> {
+    return new <%= props.entityName %>({
+      props,
+      id: randomUUID(),
+    });
+  }
+
+  validate(): void {
+    throw new Error('Method not implemented.');
+  }
+}
+
+export interface <%= props.entityName %>Props {}

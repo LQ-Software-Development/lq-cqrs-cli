@@ -1,0 +1,5 @@
+import { RepositoryInterface } from '@/core/domain/repository.interface';
+import { <%= props.entityName %> } from '../domain/<%= props.kebabedName %>.domain';
+
+export interface <%= props.entityName %>RepositoryInterface
+  extends RepositoryInterface<<%= props.entityName %>> {}

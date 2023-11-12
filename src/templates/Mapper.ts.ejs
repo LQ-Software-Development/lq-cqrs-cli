@@ -1,0 +1,24 @@
+import { <%= props.entityName %>, <%= props.entityName %>Props } from '../domain/<%= props.kebabedName %>.domain';
+
+export class <%= props.entityName %>Mapper {
+  static toPersistence(entity: <%= props.entityName %>): <%= props.entityName %>Props {
+    const props = entity.getPropsCopy();
+
+    return {
+      ...props,
+    };
+  }
+
+  static toDomain(
+    raw: <%= props.entityName %>Props & { createdAt: Date; updatedAt: Date; id: string },
+  ): <%= props.entityName %> {
+    const { id, createdAt, updatedAt, ...props } = raw;
+
+    return new <%= props.entityName %>({
+      id,
+      createdAt,
+      updatedAt,
+      props,
+    });
+  }
+}

@@ -17,16 +17,16 @@ export class Result<T> {
     this._value = value;
   }
 
+  get value(): T {
+    return this._getValue();
+  }
+
   static ok<U>(value?: U): Result<U> {
     return new Result<U>(true, undefined, value);
   }
 
   static fail<U>(error: ExceptionBase): Result<U> {
     return new Result<U>(false, error);
-  }
-
-  get value(): T {
-    return this._getValue();
   }
 
   private _getValue(): T {

@@ -82,10 +82,10 @@ async function addRequiredLibs() {
     const packageManager = 'yarn' // ou 'yarn'
 
     print.info('Instalando bibliotecas necessárias...\n')
-    // Comando para instalar o Prisma
-    const prismaInstallCommand = `${packageManager} add prisma`
-    await system.run(prismaInstallCommand)
-    print.warning('- Prisma instalado com sucesso.')
+    // Comando para instalar o Nest typeorm
+    const typeormInstallCommand = `${packageManager} add @nestjs/typeorm typeorm`
+    await system.run(typeormInstallCommand)
+    print.warning('- Typeorm instalado com sucesso.')
 
     // Comando para instalar @nestjs/swagger
     const swaggerInstallCommand = `${packageManager} add @nestjs/swagger`
