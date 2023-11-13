@@ -1,4 +1,4 @@
-# PLIN CLI
+# LQ CLI
 
 CLI para auxiliar o desenvolvimento utilizando DDD.
 
