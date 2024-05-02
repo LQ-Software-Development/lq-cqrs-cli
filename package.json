@@ -1,9 +1,11 @@
 {
-  "name": "lq",
+  "name": "lq-cqrs-cli",
   "version": "0.0.1",
   "description": "LQ CLI",
-  "private": true,
-  "bin": "bin/lq",
+  "private": false,
+  "bin": {
+    "lq": "bin/lq"
+  },
   "scripts": {
     "format": "eslint \"**/*.{js,jsx}\" --fix && prettier \"**/*.{js,jsx,json}\" --write",
     "test": "jest",
@@ -20,7 +22,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "gluegun": "latest"
+    "@nestjs/swagger": "^7.3.0",
+    "@nestjs/typeorm": "^10.0.2",
+    "class-validator": "^0.14.1",
+    "gluegun": "latest",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "copyfiles": "^2.4.1",
