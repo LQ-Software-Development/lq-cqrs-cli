@@ -1,0 +1,20 @@
+# Security-sensitive paths — require CTO review
+# Auth & permissions
+/auth/** @LQ-Software-Development/cto
+api/auth/** @LQ-Software-Development/cto
+**/permissions/** @LQ-Software-Development/cto
+**/roles/** @LQ-Software-Development/cto
+
+# Cryptography
+**/crypto/** @LQ-Software-Development/cto
+**/encryption/** @LQ-Software-Development/cto
+**/keys/** @LQ-Software-Development/cto
+
+# Secrets & credentials
+**/secrets/** @LQ-Software-Development/cto
+**/credentials/** @LQ-Software-Development/cto
+.env* @LQ-Software-Development/cto
+
+# Sensitive integrations
+**/payment/** @LQ-Software-Development/cto
+**/pii/** @LQ-Software-Development/cto
