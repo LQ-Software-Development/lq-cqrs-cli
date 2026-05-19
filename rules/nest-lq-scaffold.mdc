@@ -1,0 +1,19 @@
+---
+description: Em projetos Nest com src/core LQ, use a CLI lq para scaffold antes de criar services/controllers/DTOs manualmente
+globs:
+  - "src/**/*.ts"
+alwaysApply: false
+---
+
+# Nest + LQ scaffold
+
+When adding HTTP endpoints, services, controllers, DTOs, or use-case folders in a project that has `src/core/`:
+
+1. Load the `lq-nest-scaffold` skill (or follow its workflow).
+2. Prefer `lq service <kebab-name> --module <module> --http <Method> --no-interactive` over creating boilerplate files by hand.
+3. Use `--dry-run --format=json` first when planning file paths.
+4. After generation, register providers/controllers in the Nest `*.module.ts`.
+
+Do not duplicate DDD folder structures without CLI flags (`--cqrs`, `--domain`, `--type resource`).
+
+CLI docs live in the `lq-cqrs-cli` repository: `docs/commands.md`.

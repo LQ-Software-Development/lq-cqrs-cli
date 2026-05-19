@@ -19,6 +19,9 @@ jobs:
       - name: Install CLI dependencies
         run: yarn install --frozen-lockfile || yarn install
 
+      - name: Validate agent skills
+        run: yarn validate:skills
+
       - name: Unit tests
         run: yarn test --testPathPattern=cli-integration
 
