@@ -1,0 +1,24 @@
+import { Injectable } from '@nestjs/common';
+
+import { Result } from '@/core/application/result';
+
+import { <%= props.name %>RequestDto } from './dto/<%= props.kebabedName %>.request.dto';
+import { <%= props.name %>ResponseDto } from './dto/<%= props.kebabedName %>.response.dto';
+<% if (props.repository) { %>
+import { <%= props.name %>RepositoryInterface } from '../../repositories/<%= props.kebabedName %>.repository.interface';
+<% } %>
+
+@Injectable()
+export class <%= props.name %>Service {
+<% if (props.repository) { %>
+  constructor(
+    private readonly <%= props.camelName %>Repository: <%= props.name %>RepositoryInterface,
+  ) {}
+<% } else { %>
+  constructor() {}
+<% } %>
+
+  async execute(request: <%= props.name %>RequestDto): Promise<Result<<%= props.name %>ResponseDto>> {
+    return Result.ok({} as <%= props.name %>ResponseDto);
+  }
+}

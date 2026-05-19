@@ -1,26 +1,64 @@
 {
-  "name": "lq",
-  "version": "0.0.1",
-  "description": "LQ CLI",
-  "private": true,
-  "bin": "bin/lq",
+  "name": "@lq-software-development/cli",
+  "version": "0.1.0",
+  "description": "NestJS scaffold CLI with LQ patterns (Result, DDD opt-in, CQRS opt-in) for humans and AI agents",
+  "private": false,
+  "bin": {
+    "lq": "bin/lq",
+    "lq-install-skills": "bin/lq-install-skills"
+  },
   "scripts": {
     "format": "eslint \"**/*.{js,jsx}\" --fix && prettier \"**/*.{js,jsx,json}\" --write",
     "test": "jest",
+    "test:e2e": "jest __tests__/e2e-generate.test.js",
+    "validate:skills": "./scripts/validate-skills.sh",
+    "prepublishOnly": "npm run validate:skills && npm run test -- --testPathPattern=cli-integration",
     "watch": "jest --watch",
     "snapupdate": "jest --updateSnapshot",
     "coverage": "jest --coverage"
   },
   "files": [
+    "bin",
     "src",
+    "skills",
+    "scripts",
+    ".opencode",
+    ".cursor-plugin",
+    "rules",
+    "templates",
     "LICENSE",
     "readme.md",
-    "docs",
-    "bin"
+    "docs"
   ],
   "license": "MIT",
+  "author": "LQ Software Development",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LQ-Software-Development/lq-cqrs-cli.git"
+  },
+  "homepage": "https://github.com/LQ-Software-Development/lq-cqrs-cli#readme",
+  "bugs": {
+    "url": "https://github.com/LQ-Software-Development/lq-cqrs-cli/issues"
+  },
+  "keywords": [
+    "nestjs",
+    "cli",
+    "ddd",
+    "cqrs",
+    "scaffold",
+    "gluegun",
+    "lq",
+    "codegen"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "dependencies": {
-    "gluegun": "latest"
+    "gluegun": "^5.1.6"
   },
   "devDependencies": {
     "copyfiles": "^2.4.1",
@@ -33,7 +71,8 @@
     "pretty-quick": "^3.1.0"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testTimeout": 120000
   },
   "prettier": {
     "semi": false,

@@ -1,0 +1,50 @@
+## LQ Nest scaffold (agentes)
+
+Este projeto usa a **LQ CLI** para gerar services, controllers e DTOs no padrão LQ (`Result`, `src/core`).
+
+### Regras para o agente
+
+1. **Não** criar boilerplate manual (`*.service.ts`, `*.controller.ts`, DTOs em pasta padrão LQ) se o comando `lq` estiver disponível.
+2. **Sempre** usar `--no-interactive` e `--module <nome>` em comandos `lq`.
+3. Planejar com dry-run:  
+   `lq service <kebab> --module <m> --http Post --no-interactive --dry-run --format=json`
+4. Gerar:  
+   `lq service <kebab> --module <m> --http Post --no-interactive`
+5. Registrar service/controller no `*.module.ts` após gerar.
+
+### Skills (Cursor / OpenCode)
+
+Com a CLI via npm:
+
+```bash
+lq-install-skills --all --project .
+```
+
+Ou a partir do clone `lq-cqrs-cli`:
+
+```bash
+./scripts/install-skills.sh --all --project .
+```
+
+Skills: `using-lq-cli`, `lq-nest-scaffold`.
+
+- Cursor: `docs/README.cursor.md` no repo da CLI  
+- OpenCode: `.opencode/INSTALL.md` no repo da CLI  
+
+### Pré-requisitos
+
+- `lq init` executado (existe `src/core/`)
+- Módulo Nest: `src/<module>/` (ex.: `nest g mo users`)
+- CLI no PATH: `npm install -g @lq-software-development/cli` → `lq --version`
+
+### Quando usar DDD completo
+
+```bash
+lq g <name> --type resource --module <m> --cqrs command --http Post --no-interactive
+```
+
+### Domínio + repositório
+
+```bash
+lq service <name> --module <m> --domain --in-memory --no-interactive
+```
