@@ -7,12 +7,20 @@
   "scripts": {
     "format": "eslint \"**/*.{js,jsx}\" --fix && prettier \"**/*.{js,jsx,json}\" --write",
     "test": "jest",
+    "test:e2e": "jest __tests__/e2e-generate.test.js",
+    "validate:skills": "./scripts/validate-skills.sh",
     "watch": "jest --watch",
     "snapupdate": "jest --updateSnapshot",
     "coverage": "jest --coverage"
   },
   "files": [
     "src",
+    "skills",
+    "scripts",
+    ".opencode",
+    ".cursor-plugin",
+    "rules",
+    "templates",
     "LICENSE",
     "readme.md",
     "docs",
@@ -20,7 +28,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "gluegun": "latest"
+    "gluegun": "^5.1.6"
   },
   "devDependencies": {
     "copyfiles": "^2.4.1",
@@ -33,7 +41,8 @@
     "pretty-quick": "^3.1.0"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testTimeout": 120000
   },
   "prettier": {
     "semi": false,

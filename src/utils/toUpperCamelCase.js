@@ -1,6 +1,6 @@
 function toUpperCamelCase(inputString) {
   // Divide a string em palavras separadas por "-"
-  const words = inputString.split('-')
+  const words = inputString.split(/[-_]/).filter(Boolean)
 
   // Capitaliza a primeira letra de cada palavra
   const capitalizedWords = words.map(

@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main, 'cursor/**']
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+
+      - name: Install CLI dependencies
+        run: yarn install --frozen-lockfile || yarn install
+
+      - name: Validate agent skills
+        run: yarn validate:skills
+
+      - name: Unit tests
+        run: yarn test --testPathPattern=cli-integration
+
+      - name: E2E generate + typecheck
+        run: yarn test:e2e

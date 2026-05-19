@@ -1,0 +1,8 @@
+{
+  "name": "lq-cli",
+  "version": "0.1.0",
+  "description": "LQ NestJS scaffold CLI — agent skills for service/DDD generation",
+  "author": "LQ Software Development",
+  "license": "MIT",
+  "keywords": ["nestjs", "ddd", "cqrs", "scaffold", "lq"]
+}
