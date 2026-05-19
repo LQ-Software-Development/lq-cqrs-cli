@@ -16,7 +16,7 @@ import {
 } from '@nestjs/common';
 
 export abstract class ControllerBase {
-  handleErrorResponse(exception: ExceptionBase) {
+  handleErrorResponse(exception: ExceptionBase): never {
     switch (exception.code) {
       case ARGUMENT_NOT_PROVIDED:
         throw new BadRequestException(exception.message);

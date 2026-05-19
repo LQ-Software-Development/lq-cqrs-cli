@@ -1,9 +1,8 @@
 const { system, filesystem } = require('gluegun')
 
 const src = filesystem.path(__dirname, '..')
-
-const cli = async (cmd) =>
-  system.run('node ' + filesystem.path(src, 'bin', 'pln') + ` ${cmd}`)
+const cli = async (cmd, cwd) =>
+  system.run(`node ${filesystem.path(src, 'bin', 'lq')} ${cmd}`, { cwd })
 
 test('outputs version', async () => {
   const output = await cli('--version')
@@ -12,18 +11,7 @@ test('outputs version', async () => {
 
 test('outputs help', async () => {
   const output = await cli('--help')
-  expect(output).toContain('0.0.1')
-})
-
-test('generates file', async () => {
-  const output = await cli('generate foo')
-
-  expect(output).toContain('Generated file at models/foo-model.js')
-  const foomodel = filesystem.read('models/foo-model.js')
-
-  expect(foomodel).toContain(`module.exports = {`)
-  expect(foomodel).toContain(`name: 'foo'`)
-
-  // cleanup artifact
-  filesystem.remove('models')
+  expect(output).toContain('init')
+  expect(output).toContain('service')
+  expect(output).toContain('generate')
 })

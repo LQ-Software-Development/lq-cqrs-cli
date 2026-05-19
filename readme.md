@@ -1,25 +1,42 @@
 # LQ CLI
 
-CLI para auxiliar o desenvolvimento utilizando DDD.
+CLI para scaffold NestJS com padrões LQ (Result, DDD opt-in, CQRS opt-in). Pensada para uso humano e **agentes de IA** (modo `--no-interactive`).
 
-## Customizing your CLI
+## Instalação
 
-Check out the documentation at https://github.com/infinitered/gluegun/tree/master/docs.
-
-## Publishing to NPM
-
-To package your CLI up for NPM, do this:
-
-```shell
-$ yarn login
-$ yarn whoami
-$ yarn test
-$ yarn link
-
-$ yarn publish
+```bash
+yarn install
+yarn link
 ```
 
-# License
+## Uso rápido
 
-MIT - see LICENSE
+```bash
+# No projeto Nest (após nest g mo users)
+lq init
 
+# Padrão recomendado (Nest-like)
+lq service create-user --module users --http Post --no-interactive
+
+# DDD completo (legado)
+lq g create-order --type resource --module users --cqrs command --http Post --no-interactive
+
+# Dry-run + JSON para agentes
+lq service create-user --module users --no-interactive --dry-run --format=json
+```
+
+## Documentação
+
+- [Referência de comandos](docs/commands.md)
+- [Arquitetura do experimento](docs/architecture.md)
+
+## Desenvolvimento
+
+```bash
+yarn test              # testes unitários
+yarn test:e2e          # gera em fixture + tsc
+```
+
+## License
+
+MIT — see LICENSE

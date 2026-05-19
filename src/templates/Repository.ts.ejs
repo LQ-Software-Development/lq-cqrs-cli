@@ -1,31 +1,36 @@
+import { Repository, getRepository } from 'typeorm';
+
 import { AggregateID } from '@/core/domain/entity.base';
 import { Result } from '@/core/application/result';
+
 import { <%= props.entityName %>Model } from '../../models/<%= props.kebabedName %>.model';
 import { <%= props.entityName %> } from '../../domain/<%= props.kebabedName %>.domain';
 import { <%= props.entityName %>Mapper } from '../../mappers/<%= props.kebabedName %>.mapper';
-
 import { <%= props.entityName %>RepositoryInterface } from '../<%= props.kebabedName %>.repository.interface';
 
 export class <%= props.entityName %>Repository implements <%= props.entityName %>RepositoryInterface {
   private readonly _repository: Repository<<%= props.entityName %>Model>;
 
   constructor() {
-    this._repository = getRepository(<%= props.entityName %>);
+    this._repository = getRepository(<%= props.entityName %>Model);
   }
 
-  async save(entity: <%= props.entityName %>, id: AggregateID): Promise<Result<<%= props.entityName %>>> {
+  async save(
+    entity: <%= props.entityName %>,
+    id?: AggregateID,
+  ): Promise<Result<<%= props.entityName %>>> {
     const rawEntity = <%= props.entityName %>Mapper.toPersistence(entity);
 
     const persistedEntity = await this._repository.save({
       ...rawEntity,
-      id,
+      id: id ?? entity.id,
     });
 
     return Result.ok(<%= props.entityName %>Mapper.toDomain(persistedEntity));
   }
 
   async findById(id: string): Promise<<%= props.entityName %> | null> {
-    const rawEntity = await this._repository.findOne(id);
+    const rawEntity = await this._repository.findOne({ where: { id } });
 
     if (!rawEntity) {
       return null;
@@ -37,6 +42,8 @@ export class <%= props.entityName %>Repository implements <%= props.entityName %
   async list(): Promise<<%= props.entityName %>[]> {
     const rawEntities = await this._repository.find();
 
-    return rawEntities.map((rawEntity) => <%= props.entityName %>Mapper.toDomain(rawEntity));
+    return rawEntities.map((rawEntity) =>
+      <%= props.entityName %>Mapper.toDomain(rawEntity),
+    );
   }
 }

@@ -8,14 +8,14 @@ import { Body, Controller, <%= props.method %> } from '@nestjs/common';
 
 import { ControllerBase } from '@/core/application/controller.base';
 
-import { I<%= props.name %>UseCase } from './<%= props.kebabedName.toLowerCase() %>.usecase.interface';
-import { <%= props.name %>RequestDto } from './dtos/<%= props.kebabedName.toLowerCase() %>.request';
-import { <%= props.name %>ResponseDto } from './dtos/<%= props.kebabedName.toLowerCase() %>.response';
+import { <%= props.name %>Service } from './<%= props.kebabedName %>.service';
+import { <%= props.name %>RequestDto } from './dto/<%= props.kebabedName %>.request.dto';
+import { <%= props.name %>ResponseDto } from './dto/<%= props.kebabedName %>.response.dto';
 
-@ApiTags('<%= props.moduleName.toLowerCase() %>')
-@Controller('<%= props.name.toLowerCase() %>')
+@ApiTags('<%= props.moduleName %>')
+@Controller('<%= props.route %>')
 export class <%= props.name %>Controller extends ControllerBase {
-  constructor(private <%= props.name%>UseCase: I<%= props.name %>UseCase) {
+  constructor(private readonly <%= props.camelName %>Service: <%= props.name %>Service) {
     super();
   }
 
@@ -24,7 +24,7 @@ export class <%= props.name %>Controller extends ControllerBase {
   @ApiBadRequestResponse({ description: 'Bad Request' })
   @<%= props.method %>()
   async handle(<% if (['Post', 'Put', 'Patch'].includes(props.method)) { %>@Body() <% } %>request: <%= props.name %>RequestDto): Promise<<%= props.name %>ResponseDto> {
-    const result = await this.<%= props.name%>UseCase.execute(request);
+    const result = await this.<%= props.camelName %>Service.execute(request);
 
     if (result.isFailure) return this.handleErrorResponse(result.error);
 
