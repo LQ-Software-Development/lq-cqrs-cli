@@ -6,7 +6,7 @@ const cli = async (cmd, cwd) =>
 
 test('outputs version', async () => {
   const output = await cli('--version')
-  expect(output).toContain('0.0.1')
+  expect(output).toContain('0.1.0')
 })
 
 test('outputs help', async () => {

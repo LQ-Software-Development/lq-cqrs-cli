@@ -14,7 +14,7 @@ metadata:
 
 1. Nest module folder exists: `nest g mo <module>` → `src/<module>/`
 2. LQ core in the app: `lq init` (creates `src/core/` and `@/*` paths) if not present
-3. CLI on PATH: `lq --version` (install via `yarn link` in the CLI repo)
+3. CLI on PATH: `lq --version` (`npm install -g @lq-software-development/cli` or `npx @lq-software-development/cli --version`)
 
 ## Agent workflow (mandatory)
 
@@ -111,7 +111,13 @@ Adjust class names to match generated files.
 
 ## Installation (for humans)
 
-Skills ship with this repo. From the CLI repository root:
+With npm-installed CLI:
+
+```bash
+lq-install-skills --all --project /path/to/nest-app
+```
+
+From source clone:
 
 ```bash
 ./scripts/install-skills.sh --all --project /path/to/nest-app

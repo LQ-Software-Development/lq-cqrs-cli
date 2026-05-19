@@ -53,7 +53,7 @@ Never read skill files with generic file tools if your platform provides a dedic
 command -v lq && test -d src/core && ls src/
 ```
 
-If `lq` is missing: ask the user to run `yarn link` in the CLI repo or install globally.
+If `lq` is missing: `npm install -g @lq-software-development/cli` or `npx @lq-software-development/cli <command>`.
 
 If `src/core` is missing: run `lq init` once at the Nest project root (after `nest g mo <module>`).
 

@@ -5,12 +5,18 @@ As skills ensinam o agente a usar a **LQ CLI** em projetos Nest em vez de escrev
 ## Pré-requisitos
 
 - [Cursor](https://cursor.com) com Agent / Skills habilitados
-- Repositório [lq-cqrs-cli](https://github.com/LQ-Software-Development/lq-cqrs-cli) clonado (ou script remoto)
-- CLI `lq` instalada no ambiente onde o agente roda comandos (`yarn link` na raiz do CLI)
+- CLI `lq` no PATH: `npm install -g @lq-software-development/cli`
 
 ## Opção 1 — Projeto Nest (recomendado)
 
-Na raiz do **app Nest** (não na raiz do CLI):
+Na raiz do **app Nest**:
+
+```bash
+npm install -g @lq-software-development/cli
+lq-install-skills --cursor --project .
+```
+
+Alternativa via clone do repositório:
 
 ```bash
 git clone https://github.com/LQ-Software-Development/lq-cqrs-cli.git /tmp/lq-cqrs-cli
@@ -86,4 +92,4 @@ Reexecute o instalador com `--copy` se preferir arquivos estáticos:
 |---------|---------|
 | Skill não aparece no `/` | Confirme pasta `SKILL.md` em maiúsculas; reinicie Cursor |
 | Agente ignora a CLI | Adicione `AGENTS.md.snippet`; use rule `nest-lq-scaffold` |
-| `lq: command not found` | `yarn link` no repo da CLI ou PATH global |
+| `lq: command not found` | `npm install -g @lq-software-development/cli` |

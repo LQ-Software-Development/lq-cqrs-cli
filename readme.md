@@ -1,10 +1,26 @@
-# LQ CLI
+# LQ CLI (`@lq-software-development/cli`)
 
 CLI para scaffold NestJS com padrões LQ (Result, DDD opt-in, CQRS opt-in). Pensada para uso humano e **agentes de IA** (modo `--no-interactive`).
 
-## Instalação
+## Instalação (npm)
 
 ```bash
+npm install -g @lq-software-development/cli
+```
+
+Sem instalação global:
+
+```bash
+npx @lq-software-development/cli --help
+```
+
+Comandos disponíveis após instalar: **`lq`** e **`lq-install-skills`**.
+
+### Desenvolvimento local (contribuidores)
+
+```bash
+git clone https://github.com/LQ-Software-Development/lq-cqrs-cli.git
+cd lq-cqrs-cli
 yarn install
 yarn link
 ```
@@ -27,11 +43,15 @@ lq service create-user --module users --no-interactive --dry-run --format=json
 
 ## Agent Skills (Cursor / OpenCode)
 
-Skills ensinam agentes a usar a CLI em vez de escrever boilerplate manualmente.
+```bash
+# No projeto Nest (raiz do app), com CLI instalada via npm:
+lq-install-skills --all --project .
+```
+
+Ou a partir do clone do repositório:
 
 ```bash
-# No projeto Nest (raiz do app)
-/path/to/lq-cqrs-cli/scripts/install-skills.sh --all --project .
+./scripts/install-skills.sh --all --project .
 ```
 
 | Harness | Guia |
@@ -39,9 +59,11 @@ Skills ensinam agentes a usar a CLI em vez de escrever boilerplate manualmente.
 | **Cursor** | [docs/README.cursor.md](docs/README.cursor.md) |
 | **OpenCode** | [.opencode/INSTALL.md](.opencode/INSTALL.md) |
 
-Skills incluídas: `using-lq-cli`, `lq-nest-scaffold`.
+Skills: `using-lq-cli`, `lq-nest-scaffold`. Snippet para `AGENTS.md`: [templates/AGENTS.md.snippet](templates/AGENTS.md.snippet).
 
-Cole também [`templates/AGENTS.md.snippet`](templates/AGENTS.md.snippet) no `AGENTS.md` do seu app Nest.
+## Publicar no npm (mantenedores)
+
+Primeira vez publicando? Siga o guia passo a passo: **[docs/PUBLISHING-NPM.md](docs/PUBLISHING-NPM.md)**.
 
 ## Documentação
 
@@ -52,9 +74,9 @@ Cole também [`templates/AGENTS.md.snippet`](templates/AGENTS.md.snippet) no `AG
 ## Desenvolvimento
 
 ```bash
-yarn test              # testes unitários
-yarn test:e2e          # gera em fixture + tsc
-yarn validate:skills   # valida SKILL.md
+yarn test
+yarn test:e2e
+yarn validate:skills
 ```
 
 ## License

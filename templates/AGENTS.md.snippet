@@ -14,7 +14,13 @@ Este projeto usa a **LQ CLI** para gerar services, controllers e DTOs no padrão
 
 ### Skills (Cursor / OpenCode)
 
-Instale a partir do repositório `lq-cqrs-cli`:
+Com a CLI via npm:
+
+```bash
+lq-install-skills --all --project .
+```
+
+Ou a partir do clone `lq-cqrs-cli`:
 
 ```bash
 ./scripts/install-skills.sh --all --project .
@@ -29,7 +35,7 @@ Skills: `using-lq-cli`, `lq-nest-scaffold`.
 
 - `lq init` executado (existe `src/core/`)
 - Módulo Nest: `src/<module>/` (ex.: `nest g mo users`)
-- CLI no PATH: `lq --version`
+- CLI no PATH: `npm install -g @lq-software-development/cli` → `lq --version`
 
 ### Quando usar DDD completo
 

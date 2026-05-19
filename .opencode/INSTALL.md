@@ -3,11 +3,18 @@
 ## Pré-requisitos
 
 - [OpenCode](https://opencode.ai) instalado
-- CLI `lq` disponível no shell do agente
+- CLI `lq`: `npm install -g @lq-software-development/cli`
 
 ## Instalação rápida (projeto Nest)
 
 Na raiz do app Nest:
+
+```bash
+npm install -g @lq-software-development/cli
+lq-install-skills --opencode --project .
+```
+
+Alternativa via clone:
 
 ```bash
 git clone https://github.com/LQ-Software-Development/lq-cqrs-cli.git /tmp/lq-cqrs-cli
