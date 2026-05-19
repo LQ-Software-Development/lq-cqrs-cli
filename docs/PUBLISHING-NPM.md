@@ -27,7 +27,11 @@ O comando no terminal continua sendo **`lq`**, não o nome longo do pacote.
 
 1. Acesse [https://www.npmjs.com/signup](https://www.npmjs.com/signup)
 2. Confirme o e-mail
-3. Ative **2FA** (recomendado): Account → Security
+3. Ative **2FA para publicar** (obrigatório no npm hoje):
+   - [npmjs.com](https://www.npmjs.com) → avatar → **Account** → **Security**
+   - **Enable 2FA** (app autenticador, ex. Google Authenticator)
+   - Escolha o modo **Authorization and publishing** (não só “login”)
+   - Sem isso, `npm publish` retorna **403** pedindo 2FA
 
 ### 2. Criar a organização (scope)
 
@@ -98,19 +102,29 @@ Deve listar `bin/`, `src/`, `skills/`, `scripts/`, etc. **Não** deve incluir `_
 
 ### 5. Publicar
 
+**Antes do publish**, faça login de novo (para gravar sessão com 2FA):
+
+```bash
+npm logout
+npm login
+```
+
+No `npm login`, use senha + **código OTP** do autenticador.
+
 Na raiz do projeto:
 
 ```bash
 npm publish --access public
 ```
 
+- O npm pode pedir o **OTP de novo** no terminal — isso é normal.
 - `--access public` é obrigatório na **primeira** vez de um pacote `@org/...` (scoped).
 - O `package.json` já tem `publishConfig.access: public` para as próximas versões.
 
-Se der erro de permissão:
+Se der erro de permissão na **org**:
 
 - Sua conta precisa ser **membro** da org `lq-software-development` com permissão de publish.
-- Na org npm: Members → seu usuário → role **Developer** ou **Owner**.
+- Na org npm: **Members** → seu usuário → role **Developer** ou **Owner**.
 
 ### 6. Confirmar no site
 
@@ -197,12 +211,36 @@ npm update -g @lq-software-development/cli
 
 ## Erros comuns
 
+### 403 — “Two-factor authentication … is required to publish”
+
+**A organização provavelmente está ok.** Esse erro é da **conta npm**, não do nome `@lq-software-development`.
+
+1. Ative 2FA: Account → Security → **Enable 2FA** → modo **Authorization and publishing**.
+2. `npm logout` e `npm login` (com OTP).
+3. Rode de novo: `npm publish --access public` (digite OTP se pedir).
+
+**Alternativa (token):**
+
+1. Account → **Access Tokens** → **Generate New Token** → **Granular Access Token**
+2. Permissions: **Read and write** para pacotes da org `lq-software-development`
+3. Marque **Bypass 2FA for automation** (se disponível no seu plano)
+4. No terminal:
+
+```bash
+npm logout
+npm login   # username + token como senha, ou:
+# echo "//registry.npmjs.org/:_authToken=SEU_TOKEN" >> ~/.npmrc
+npm publish --access public
+```
+
+### Outros erros
+
 | Erro | O que fazer |
 |------|-------------|
 | `402 Payment Required` | Pacote scoped privado sem plano pago — use `--access public` |
-| `403 Forbidden` | Usuário sem permissão na org — adicionar membro na org npm |
+| `403 Forbidden` (sem mencionar 2FA) | Usuário sem permissão na org — Members → Developer/Owner |
 | `409 Conflict` | Versão já publicada — subir `version` no package.json |
-| `ENEEDAUTH` | Rodar `npm login` de novo |
+| `ENEEDAUTH` | `npm logout` + `npm login` |
 | `prepublishOnly` falhou | Corrigir testes localmente antes de publicar |
 
 ---
